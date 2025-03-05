@@ -1,0 +1,20 @@
+<!-- Je vais mettre ici le HTML de base que toutes mes pages vont
+utiliser les autres pages vont utiliser un layout:decorate="~{layout}"-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<!-- on n'utilise pas de fragments pour le <head> car ca ne fait pas marcher la fonctionnalité de redéfinition de la balise <title> -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initialscale=1.0">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <!-- la balise title qui va être redéfini dans nos pages qui  vont "décorer" ce layout -->
+    <title>Titre par défaut</title>
+</head>
+<body>
+<!-- on va reprendre le <header> de notre fichier fragments/header.html-->
+<header th:replace="~{fragments/header}"></header>
+<!-- Cette section va être remplacée avec le contenu présent dans la section annotée layout:fragment="content" de notre fichier html qui décore ce layout -->
+<main layout:fragment="content"></main>
+<!-- on va reprendre le <footer> de notre fichier fragments/footer.html-->
+<footer th:replace="~{fragments/footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!--<!doctype html>-->
+<html lang="en" layout:decorate="~{fragments/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>Participants</title>
+</head>
+<body>
+
+<!--contenu principal de notre page -->
+<main layout:fragment="content">
+    <h2>Ajouter un participants</h2>
+
+    <!--je gère un formulaire synchronisé avec mon objet participant-->
+    <form th:action="@{/participants}" method="post" th:object="${participant}" >
+        <div class="form-element">
+            <label>Prenom</label>
+            <input type="text" th:field="*{prenom}"> <!--je veux mettre à jour via ce champs l'attribut "prenom" de mon objet participant-->
+        </div>
+        <div class="form-element">
+            <label>Nom</label>
+            <input type="text" th:field="*{nom}"> <!--je veux mettre à jour via ce champs l'attribut "nom" de mon objet participant-->
+        </div>
+
+        <div class="form-element">
+            <button>Valider</button>
+        </div>
+    </form>
+
+    <h2>Liste des participants</h2>
+
+    <table class="full-width">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Participant</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--pour chaque film contenu dans ma liste "films" (attribut du modèle, je vais créer un tr avec th:each-->
+        <tr th:each="participant : ${participants}">
+            <td th:text="${participant.id}"></td>
+            <td th:text="${participant}"></td>
+            <td>
+                <form th:action="@{/participants/delete}" method="post">
+                    <button name="idToDelete" th:value="${participant.id}" class="delete-button">X</button>
+                </form></td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+
+</body>
+</html>

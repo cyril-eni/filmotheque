@@ -1,0 +1,76 @@
+<!--<!doctype html>-->
+<html lang="en" layout:decorate="~{fragments/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title>Films</title>
+</head>
+<body>
+
+<!--contenu principal de notre page -->
+<main layout:fragment="content">
+    <!-- j'utilise la traduction de mon fichier messages.properties (_en ou _fr en fonction des préférences du navigateur)-->
+    <h2 th:text="#{films.title}"></h2>
+
+
+    <form th:action="@{/films}" method="get" class="search-form" th:object="${parametresRecherche}">
+        <!--recherche basique -->
+        <div class="form-element" th:if="${param.avance == null}">
+            <input th:field="*{recherche}" th:value="${param.recherche}" placeholder="terme de recherche">
+            <button>Rechercher</button>
+            <a th:href="@{/films?avance=true}">recherche avancée</a>
+        </div>
+        <!--recherche avancée -->
+        <div class="form-element" th:if="${param.avance != null}">
+            <input th:type="hidden" name="avance" value="true">
+            <!--barre de recherche-->
+            <input  th:field="*{recherche}" th:value="${param.recherche}" placeholder="terme de recherche">
+            <!--filtre par genre -->
+            <select th:field="*{genre}">
+                <option value=""> --filtrer par genre-- </option>
+                <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.titre}"></option>
+            </select>
+            <!--filtre par réalisateur -->
+            <select th:field="*{realisateur}" >
+                <option value=""> --filtrer par réalisateur-- </option>
+                <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant}"></option>
+            </select>
+            <!--filtre par durée -->
+            <input  type="number" th:field="*{dureeMin}" placeholder="durée min">
+            <input  type="number" th:field="*{dureeMax}" placeholder="durée max">
+            <!--filtre par année -->
+            <input  type="number" th:field="*{anneeMin}" placeholder="année min">
+            <input  type="number" th:field="*{anneeMax}" placeholder="année max">
+
+            <button>Rechercher</button>
+            <a th:href="@{/films}">recherche basique</a>
+        </div>
+    </form>
+
+    <table class="full-width">
+        <thead>
+        <tr>
+            <th>Genre</th>
+            <th>Annee</th>
+            <th>Titre</th>
+            <th>Realisateur</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--pour chaque film contenu dans ma liste "films" (attribut du modèle, je vais créer un tr avec th:each-->
+        <tr th:each="film : ${films}">
+            <td th:text="${film.genre.titre}"></td>
+            <td th:text="${film.annee}"></td>
+            <td th:text="${film.titre}"></td>
+            <td th:text="${film.realisateur}"></td>
+            <td>
+                <a th:href="@{|/films/${film.id}|}">détail</a>
+                <!-- on n'affiche le bouton d'ahout d'avis que pour les utilisateurs connectés -->
+                <a  sec:authorize="isAuthenticated()" class="action-button" th:href="@{|/films/${film.id}/avis|}">ajouter avis</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>

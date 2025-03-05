@@ -1,0 +1,208 @@
+body{
+    margin: 0;
+    display : flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+/**********************
+***** HEADER *********
+***********************/
+header {
+    display : flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 50px;
+    border-bottom: 1px solid black;
+    box-shadow: 1px 1px 1px lightgrey;
+    background-color: #fecc00;
+    color: black;
+}
+
+header #titre{
+    display: flex;
+    align-items: center;
+}
+
+header #titre img{
+    width: 50px;
+    height: 50px;
+}
+
+footer{
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid black;
+    box-shadow: 1px 1px 1px lightgrey;
+    background-color: lightgrey;
+    padding: 20px;
+}
+
+nav section {
+    display: inline-block;
+}
+
+header nav ul{
+    list-style: none;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+header nav ul li{
+    display: inline-block;
+    margin-right : 10px;
+}
+
+header nav ul a, header a{
+    text-decoration: none;
+    color: black;
+}
+
+main{
+    padding : 20px;
+    flex-grow: 1; /* on met ca pour que le main laisse juste la place qu'il faut pour le header et footer*/
+}
+
+main.flex-center{
+    height : 60%;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.messageConfirmation{
+    margin: 20px;
+    padding: 5px;
+    color: darkgreen;
+    background-color: lightgreen;
+    border: 1px solid darkgreen;
+}
+
+/**********************
+***** TABLE *********
+***********************/
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+}
+
+table.full-width {
+    width: 100%;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color: white;
+}
+
+/**********************
+***** FORM *********
+***********************/
+.form-element{
+    margin : 10px;
+}
+
+.form-element label{
+    width: 150px;
+    display: inline-block;
+}
+
+.form-element button{
+    margin-left: 150px;
+    height: 30px;
+    border-radius: 3px;
+    margin-top: 10px;
+    background-color: dodgerblue;
+    color: white;
+    border: none;
+}
+
+.form-element textarea {
+    width: 300px;
+    height: 100px;
+    display: inline-block;
+}
+
+.form-element input, .form-element textarea, .form-element select{
+    padding: 3px;
+}
+
+h1 a {
+    text-decoration: none;
+    color: black;
+}
+
+.form-element ul{
+    display: inline-block;
+}
+
+.inline-display{
+    display: inline-block;
+    margin-right: 20px ;
+}
+
+.delete-button{
+    background-color: red;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.delete-button:hover{
+    cursor: pointer;
+}
+
+.error, .alert-danger{
+    color: red;
+}
+.check{
+    font-weight: bold;
+    color: green;
+}
+
+textarea {
+    resize: none;
+}
+
+.action-button{
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 15px;
+}
+.action-button:hover{
+    cursor: pointer;
+}
+
+.search-form {
+    button {
+        margin: 0 15px;
+    }
+    input{
+        width: 200px;
+        height: 30px;
+    }
+    input[type="number"]{
+        width: 100px;
+    }
+    select{
+        height: 30px;
+    }
+}

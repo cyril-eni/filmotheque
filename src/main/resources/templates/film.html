@@ -1,0 +1,87 @@
+<!--<!doctype html>-->
+<html lang="en" layout:decorate="~{fragments/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <title th:text="|Détail du film : ${film.titre}|"></title>
+</head>
+<body>
+
+<!--contenu principal de notre page -->
+<main layout:fragment="content">
+
+    <!-- si le film en modèle a un id => on est en consultation, sinon (i = 0 par défaut), en création-->
+    <h2 th:if="${film.id}">
+        <span th:text="|Détail du film : ${film.titre}|"></span>
+        <!--Si on est en visualisation, on ajoute la possibilité d'ajouter un avis si l'utilisateur est connecté-->
+        <a  sec:authorize="isAuthenticated()" class="action-button" th:href="@{|/films/${film.id}/avis|}">ajouter avis</a>
+    </h2>
+    <h2 th:if="${film.id == null}">Nouveau film</h2>
+
+
+
+    <!--Je gère un formulaire pour "mapper" mes champs de saisi à l'objet film en modèle-->
+    <form th:action="@{/films}" method="post" th:object="${film}">
+
+        <div class="form-element">
+            <label>Genre</label>
+            <select th:field="*{genre}" th:disabled="${film.id}">
+                <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.titre}"></option>
+            </select>
+        </div>
+        <div class="form-element">
+            <label>Annee</label>
+            <!--si jamais le film en modèle a un id, je suis en consultation => disabled-->
+            <input type="number" th:disabled="${film.id}" th:field="*{annee}">
+            <span class="alert-danger" th:errors="*{annee}"></span>
+        </div>
+        <div class="form-element">
+            <label>Titre</label>
+            <input th:disabled="${film.id}" th:field="*{titre}">
+            <span class="alert-danger" th:errors="*{titre}"></span>
+        </div>
+        <div class="form-element">
+            <label>Realisateur</label>
+            <select th:field="*{realisateur}" th:disabled="${film.id}" >
+                <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant}"></option>
+            </select>
+        </div>
+        <div class="form-element">
+            <label>Duree</label>
+            <input type="number"  th:disabled="${film.id}" th:field="*{duree}">
+            <span class="alert-danger" th:errors="*{duree}"></span>
+        </div>
+        <div class="form-element">
+            <label>Acteurs</label>
+            <!--si on a un id => on affiche une liste (consultation)-->
+            <ul th:if="${film.id}">
+                <li th:each="acteur : ${film.acteurs}" th:text="${acteur}"></li>
+            </ul>
+            <!--sinon, on affiche une select multiple-->
+            <select th:if="${film.id == null}" th:field="*{acteurs}" th:disabled="${film.id}" multiple >
+                <option th:each="participant : ${participants}" th:value="${participant.id}" th:text="${participant}"></option>
+            </select>
+        </div>
+        <div class="form-element">
+            <label>Synopsis</label>
+            <textarea th:disabled="${film.id}" th:text="${film.synopsis}" th:field="*{synopsis}"></textarea>
+            <span class="alert-danger" th:errors="*{synopsis}"></span>
+        </div>
+
+        <!-- on affiche le bouton de création que si le film n'a pas d'id-->
+        <div class="form-element" th:if="${film.id == null}">
+            <button type="submit">Valider</button>
+        </div>
+
+
+        <!-- si le film a un id ET qu'il a des avis, on les affiche-->
+        <div class="form-element" th:if="${film.id != null && film.avis.size() > 0}">
+            <label>Avis</label>
+            <ul>
+               <li th:each="avis : ${film.avis}" th:text="|${avis.note} : ${avis.commentaire} (${avis.membre.pseudo})|"></li>
+            </ul>
+        </div>
+    </form>
+
+</main>
+
+</body>
+</html>

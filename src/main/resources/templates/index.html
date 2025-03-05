@@ -1,0 +1,16 @@
+<!--<!doctype html>-->
+<html lang="en" layout:decorate="~{fragments/layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<!--je définie UNIQUEMENT dans le head les balises que je veux différentes de mon layout (ici : title)-->
+<head>
+    <title>Accueil</title>
+</head>
+<body>
+
+<!--contenu principal de notre page -->
+<main class="flex-center" layout:fragment="content">
+    <!-- j'utilise la traduction de mon fichier messages.properties (_en ou _fr en fonction des préférences du navigateur)-->
+    <h2 th:text="#{accueil.msg}"></h2>
+</main>
+
+</body>
+</html>
